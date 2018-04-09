@@ -1,0 +1,33 @@
+{
+  "name": "proy_node_tesinautp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.18.2",
+    "connect-multiparty": "^2.1.0",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.22.0",
+    "mongoose": "^5.0.13",
+    "mongoose-pagination": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  },
+  "scripts": {
+    "start":"nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdpb18/proyecto_utp_2018.git"
+  },
+  "author": "sdpb18",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdpb18/proyecto_utp_2018/issues"
+  },
+  "homepage": "https://github.com/sdpb18/proyecto_utp_2018#readme"
+}
