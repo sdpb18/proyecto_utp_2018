@@ -1,9 +1,15 @@
 'use strict'
 
-var bcrypt = require('bcrypt-nodejs');
+// --- Modulos
+const bcrypt = require('bcrypt-nodejs');
+const fs = require('fs');
+const path = require('path');
+
+// Modulos - Ficheros
 var UserModel = require('../models/user');
 var jwt = require('../services/jwt');
 
+// --- Funciones
 
 function pruebas(req,res) {
   res.status(200).send({
@@ -158,10 +164,28 @@ function uploadImage(req, res) {
   }
 }
 
+function getImageFile(req,res) {
+  var imageFile = req.params.imageFile;
+  var path_file = './uploads/users/'+imageFile
+
+  fs.exists(path_file, (exists)=> {
+    if(!exists){
+      res.status(404).send({
+        message: 'Imagen no existe '
+      });
+    } else {
+      res.sendFile(path.resolve(path_file));
+    }
+  });
+}
+
+//  --- Exportacion de modulos
+
 module.exports = {
   pruebas,
   addUser,
   loginUser,
   updateUser,
-  uploadImage
+  uploadImage,
+  getImageFile
 };
