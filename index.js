@@ -15,7 +15,8 @@ mongoose.connect('mongodb://localhost:27017/proyUTP',
     app.listen(port,
     function() {
       console.log(
-        'serv de api-rest de musica escuchando en el //localhost:'+port);
+        '---- serv de api-rest de musica escuchando en el //localhost:'
+        +port+'   ---- \n\n\n');
     });
   }
 });
