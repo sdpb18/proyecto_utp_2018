@@ -8,6 +8,7 @@ var app = express();
 // cargar rutas
 
 var user_routes = require('./routes/user');
+var artist_routes = require('./routes/artist');
 
 // fin rutas
 
@@ -19,6 +20,7 @@ app.use(bodyparser.json());
 // rutas base
 
 app.use('/o/api',user_routes);
+app.use('/o/api',artist_routes);
 
 // fin ruta base
 
