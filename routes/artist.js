@@ -12,7 +12,7 @@ const api = express.Router();
 
 // Metodos - API
 api.get('/artist', md_auth.ensureAuth, ArtistController.getArtist);
-
+api.post('/artist', md_auth.ensureAuth, ArtistController.saveArtist);
 
 // -- Exportacion metodos del api
 module.exports = api;
