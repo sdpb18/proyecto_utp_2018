@@ -11,7 +11,7 @@ const md_auth = require('../middlewares/authenticated');
 const api = express.Router();
 
 // Metodos - API
-api.get('/artist', md_auth.ensureAuth, ArtistController.getArtist);
+api.get('/artist/:id', md_auth.ensureAuth, ArtistController.getArtist);
 api.post('/artist', md_auth.ensureAuth, ArtistController.saveArtist);
 
 // -- Exportacion metodos del api
