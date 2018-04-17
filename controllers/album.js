@@ -62,6 +62,20 @@ album.save((err, albumStored) => {
 });
 }
 
+function getAlbums(req, res) {
+  var artistID = req.params.artist;
+
+  if(artistID){
+    // TODO - buscar todos los albunes
+    var find = AlbumModel.find({}).sort('title');
+
+  } else{
+    // TODO - buscar los albunes de un artista
+    var find = AlbumModel.find({artist:artistID}).sort('year');
+
+  }
+}
+
 //  --- Exportacion de modulos
 
 module.exports = {
