@@ -110,6 +110,122 @@ function updateArtist(req, res) {
   });
 }
 
+function deleteArtist(req, res) {
+    var artistID = req.params.id;
+    ArtistModel.findByIdAndRemove(artistID, (err, artistRemoved) => {
+        if (err) {
+            res.status(500).send({
+                message: 'Error al eliminar Artista'
+            });
+        } else {
+            if (!artistRemoved) {
+                res.status(404).send({
+                    message: 'El artista no ha sido eliminado'
+                });
+            } else {
+                res.status(200).send({
+                    artis: artistRemoved
+                });
+
+                AlbumModel.find({
+                    artist: artistRemoved._id
+                }).remove((err, albumRemoved) => {
+                    if (err) {
+                        res.status(500).send({
+                            message: 'Error al eliminar album del Artista'
+                        });
+                    } else {
+                        if (!albumRemoved) {
+                            res.status(404).send({
+                                message: 'El album del artista no ha sido eliminado'
+                            });
+                        } else {
+                            res.status(200).send({
+                                artis: albumRemoved
+                            });
+
+                            SongModel.find({
+                                artist: artistRemoved._id
+                            }).remove((err, songRemoved) => {
+                                if (err) {
+                                    res.status(500).send({
+                                        message: 'Error al eliminar cancion del Artista'
+                                    });
+                                } else {
+                                    if (!songRemoved) {
+                                        res.status(404).send({
+                                            message: 'Las canciones del artista no ha sido eliminadas'
+                                        });
+                                    } else {
+                                        res.status(200).send({
+                                            artis: songRemoved
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
+function uploadImage(req, res) {
+    var artistId = req.params.id;
+    var file_name = 'imagen no subida ... ';
+
+    if (req.files) {
+      console.log(123,req.files);
+        var file_path = req.files.image.path;
+        var file_split = file_path.split('/');
+
+        var file_name = file_split[2];
+        var ext_split = file_name.split('.');
+        var file_ext = ext_split[1];
+
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'gif') {
+            ArtistModel.findByIdAndUpdate(artistId, {
+                    image: file_name
+                },
+                (err, artistUpdated) => {
+                    if (!artistUpdated) {
+                        res.status(404).send({
+                            message: 'No se ha podido actualizar imagen del Artista'
+                        });
+                    } else {
+                        res.status(200).send({
+                            artist: artistUpdated
+                        });
+                    }
+                });
+        } else {
+            res.status(200).send({
+                message: 'Archivo con extencion no valida  '
+            });
+        }
+    } else {
+        res.status(200).send({
+            message: 'no hay imagen actualmente '
+        });
+    }
+}
+
+function getImageFile(req,res) {
+  var imageFile = req.params.imageFile;
+  var path_file = './uploads/artist/'+imageFile
+
+  fs.exists(path_file, (exists)=> {
+    if(!exists){
+      res.status(404).send({
+        message: 'Imagen no existe '
+      });
+    } else {
+      res.sendFile(path.resolve(path_file));
+    }
+  });
+}
+
 
 //  --- Exportacion de modulos
 
@@ -117,5 +233,8 @@ module.exports = {
   getArtist,
   getArtists,
   saveArtist,
-  updateArtist
+  updateArtist,
+  deleteArtist,
+  uploadImage,
+  getImageFile
 };
