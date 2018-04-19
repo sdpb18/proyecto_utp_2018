@@ -6,15 +6,12 @@ var secret = 'clave_secreta'
 
 exports.ensureAuth = function(req,res,next) {
 
-  console.log(123, req.headers);
   if(!req.headers.authorization){
-    console.log("sii entra");
     return res.status(403).send({
       message: 'La peticion carece de cabecera de autentificacion'
     });
-    console.log(567, req.headers.authorization);
+  }
     var token = req.headers.authorization.replace(/[''""]+/g,'');
-    console.log("TKn:   " + token);
     try {
       var payload = jwt.decode(token,secret);
       if (payload.exp <= moment().unix()) {
@@ -30,5 +27,5 @@ exports.ensureAuth = function(req,res,next) {
     }
     req.user = payload;
     next();
-  }
+
 }
