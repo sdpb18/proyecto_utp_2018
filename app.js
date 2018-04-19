@@ -8,6 +8,8 @@ var app = express();
 // cargar rutas
 
 var user_routes = require('./routes/user');
+var artist_routes = require('./routes/artist');
+var album_routes = require('./routes/album');
 
 // fin rutas
 
@@ -19,6 +21,8 @@ app.use(bodyparser.json());
 // rutas base
 
 app.use('/o/api',user_routes);
+app.use('/o/api',artist_routes);
+app.use('/o/api',album_routes);
 
 // fin ruta base
 
